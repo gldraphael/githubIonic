@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 
 import { User } from '../../models/user';
 
+import {  UserDetailsPage} from '../user-details/user-details'
 import { GithubUsers } from '../../providers/github-users'
 
 /*
@@ -27,6 +28,10 @@ export class UsersPage {
 
   ionViewDidLoad() {
     console.log('Hello Users Page');
+  }
+
+  goToDetailsPage(login: string) {
+    this.navCtrl.push(UserDetailsPage, {login})
   }
 
 }
