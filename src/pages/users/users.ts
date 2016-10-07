@@ -18,11 +18,13 @@ import { GithubUsers } from '../../providers/github-users'
 })
 export class UsersPage {
 
-  users: User[];
+  users: User[]; // Users that are being shown on the view
+  defaultUsers: User[]; // Users to show by default
 
   constructor(public navCtrl: NavController, private githubUsers: GithubUsers) {
     githubUsers.load().subscribe(users => {
       this.users = users;
+      this.defaultUsers = users;
     });
   }
 
@@ -32,6 +34,17 @@ export class UsersPage {
 
   goToDetailsPage(login: string) {
     this.navCtrl.push(UserDetailsPage, {login})
+  }
+
+  search(searchEvent) {
+    let term = searchEvent.target.value;
+    if(term.trim === '' || term.trim().length < 3) {
+      this.users = this.defaultUsers;
+    } else {
+      this.githubUsers.searchUsers(term).subscribe(searchResult => {
+        this.users = searchResult;
+      });
+    }
   }
 
 }

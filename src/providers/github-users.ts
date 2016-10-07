@@ -31,4 +31,9 @@ export class GithubUsers {
       .map(res => <User> res.json());
   }
 
+  searchUsers(searchString: string): Observable<User[]> {
+    return this.http.get(`${this.githubApiUrl}/users?q=${searchString}`)
+      .map(res => <User[]> res.json());
+  }
+
 }
